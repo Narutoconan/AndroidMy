@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="3dip"
+    >
+
+    <!-- 第1个TableLayout，用于描述表中的列属性。第0列可伸展，第1列可收缩 ，第2列被隐藏-->
+
+    <TableLayout
+        android:id="@+id/table1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0"
+        android:shrinkColumns="1"
+        android:collapseColumns="3"
+        android:padding="3dip">
+        <TableRow>
+            <Button android:text="该列可伸展"/>
+            <Button android:text="该列可收缩"/>
+            <Button android:text="我被隐藏了"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView android:text="我向行方向伸展，我可以很长11111111111111111111    "/>
+            <TextView android:text="我向列方向收缩，我可以很深"/>
+        </TableRow>
+
+    </TableLayout>
+
+    <!-- 第2个TableLayout，用于描述表中单元格的属性，包括：android:layout_column 及android:layout_span-->
+
+
+
+
+
+
+
+</LinearLayout>
