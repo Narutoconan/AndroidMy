@@ -95,26 +95,29 @@ public class About extends Fragment {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         // If the response is JSONObject instead of expected JSONArray
-                        System.out.println(response);
+//                        System.out.println(response);
                         try {
                             JSONArray array = response.getJSONArray("data");
 
                             for (int i = 0; i < array.length(); i++) {
                                 stringBuilder.append(array.getJSONObject(i)
-                                        .getString("datetime"));
+                                        .getString("title"));
 
                                 HashMap<String, Object> tempHashMap = new HashMap<String, Object>();
                                 tempHashMap.put("news_title", array.getJSONObject(i)
+                                        .getString("title"));
+                                tempHashMap.put("news_from", array.getJSONObject(i)
+                                        .getString("source"));
+                                tempHashMap.put("news_judge", array.getJSONObject(i)
+                                        .getString("comments_count")+"评论数量");
+                                tempHashMap.put("news_time", array.getJSONObject(i)
                                         .getString("datetime"));
-                                tempHashMap.put("news_from", "新闻来源" + i);
-                                tempHashMap.put("news_judge", "评论数量" + i);
-                                tempHashMap.put("news_time", "发布时间" + i);
 
                                 arrayList.add(tempHashMap);
                             }
 
-                            System.out.print(stringBuilder.toString());
-                            System.out.print(arrayList.toString());
+//                            System.out.print(stringBuilder.toString());
+//                            System.out.print(arrayList.toString());
                         } catch (Exception e) {
                             e.printStackTrace();
                             System.out.print("EXCCEPT///////");
