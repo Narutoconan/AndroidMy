@@ -27,15 +27,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cz.msebera.android.httpclient.Header;
+
 @SuppressLint("ValidFragment")
 public class Home extends Fragment {
     private String textString;
     private static final String[] strs = new String[]{"first", "second", "third", "fourth", "fifth"};
+    private ArrayList<HashMap<String, Object>> arrayList = new ArrayList<HashMap<String, Object>>();
 
 
     public Home(String textString) {
@@ -71,23 +81,68 @@ public class Home extends Fragment {
         return view;
     }
     /**
-     * @author chenzheng_java
-     * @description 准备一些测试数据
-     * @return 一个包含了数据信息的hashMap集合
+     * 获取服务端数据
      */
-    private ArrayList<HashMap<String, Object>> getData(){
-        ArrayList<HashMap<String, Object>> arrayList = new ArrayList<HashMap<String,Object>>();
-        for(int i=0;i<100;i++){
-            HashMap<String, Object> tempHashMap = new HashMap<String, Object>();
-            tempHashMap.put("news_title", "新闻标题"+i);
-            tempHashMap.put("news_from", "新闻来源"+i);
-            tempHashMap.put("news_judge", "评论数量"+i);
-            tempHashMap.put("news_time", "发布时间"+i);
+    public void getPublicTimeline() throws JSONException {
+        TwitterRestClient.get("recent/?source=2&count=20&category=__all__&max_behot_time=1458732835.88&utm_source=toutiao&offset=0&_=1458732835806",
+                null, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        // If the response is JSONObject instead of expected JSONArray
+//                        System.out.println(response);
+                        try {
+                            JSONArray array = response.getJSONArray("data");
 
-            arrayList.add(tempHashMap);
+                            for (int i = 0; i < array.length(); i++) {
 
-        }
 
+                                HashMap<String, Object> tempHashMap = new HashMap<String, Object>();
+                                tempHashMap.put("news_title", array.getJSONObject(i)
+                                        .getString("title"));
+                                tempHashMap.put("news_from", array.getJSONObject(i)
+                                        .getString("source"));
+                                tempHashMap.put("news_judge", array.getJSONObject(i)
+                                        .getString("comments_count")+"评论数量");
+                                tempHashMap.put("news_time", array.getJSONObject(i)
+                                        .getString("datetime"));
+
+                                arrayList.add(tempHashMap);
+                            }
+
+//                            System.out.print(stringBuilder.toString());
+//                            System.out.print(arrayList.toString());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            System.out.print("EXCCEPT///////");
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+                        // Pull out the first event on the public timeline
+                        try {
+                            JSONObject firstEvent = (JSONObject) timeline.get(0);
+
+                            String tweetText = firstEvent.getString("text");
+
+                            // Do something with the response
+
+
+                            System.out.println(tweetText);
+                        } catch (JSONException e) {
+                            //do something
+                        }
+
+                    }
+                });
+    }
+
+    /**
+     * getData
+     */
+    private ArrayList<HashMap<String, Object>> getData() {
 
         return arrayList;
 
