@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
+import android.widget.SimpleAdapter;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -48,7 +49,7 @@ import com.loopj.android.http.RequestParams;
 @SuppressLint("ValidFragment")
 public class About extends Fragment {
     private String textString;
-    private static final String[] strs = new String[]{"first", "second", "third", "fourth", "fifth","1","2","3","4","5","6"};
+    private static final String[] strs = new String[]{"first", "second", "third", "fourth", "fifth", "1", "2", "3", "4", "5", "6"};
     private List<String> mylist = new ArrayList<String>();
     StringBuilder stringBuilder = new StringBuilder();
 
@@ -73,16 +74,15 @@ public class About extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//        initData();
         System.out.print(mylist.toString());
-        ArrayAdapter myadaPter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, strs);
-        listView.setAdapter(myadaPter);
+        SimpleAdapter adapter = new SimpleAdapter(getActivity(), getData(), R.layout.me_about_text,
+                new String[]{"news_title", "news_from", "news_judge", "news_time"}, new int[]{R.id.news_title, R.id.news_from, R.id.news_judge, R.id.news_time});
+        listView.setAdapter(adapter);
+
+        listView.setAdapter(adapter);
 
         return view;
     }
-
-
-
 
 
     /**
@@ -139,14 +139,25 @@ public class About extends Fragment {
     }
 
     /**
-     * 测试demo
+     * getData
      */
-    public void initData() {
-        for (int i = 0; i < 10; i++) {
-            mylist.add("demo" + i);
-        }
-    }
+    private ArrayList<HashMap<String, Object>> getData() {
+        ArrayList<HashMap<String, Object>> arrayList = new ArrayList<HashMap<String, Object>>();
+        for (int i = 0; i < 100; i++) {
+            HashMap<String, Object> tempHashMap = new HashMap<String, Object>();
+            tempHashMap.put("news_title", "新闻标题" + i);
+            tempHashMap.put("news_from", "新闻来源" + i);
+            tempHashMap.put("news_judge", "评论数量" + i);
+            tempHashMap.put("news_time", "发布时间" + i);
 
+            arrayList.add(tempHashMap);
+
+        }
+
+
+        return arrayList;
+
+    }
 
 }
 
