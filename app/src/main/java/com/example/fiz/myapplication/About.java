@@ -50,8 +50,9 @@ import com.loopj.android.http.RequestParams;
 public class About extends Fragment {
     private String textString;
     private static final String[] strs = new String[]{"first", "second", "third", "fourth", "fifth", "1", "2", "3", "4", "5", "6"};
-    private List<String> mylist = new ArrayList<String>();
     StringBuilder stringBuilder = new StringBuilder();
+    //保存数据的变量
+    private ArrayList<HashMap<String, Object>> arrayList = new ArrayList<HashMap<String, Object>>();
 
 
     public About(String textString) {
@@ -74,9 +75,9 @@ public class About extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        System.out.print(mylist.toString());
         SimpleAdapter adapter = new SimpleAdapter(getActivity(), getData(), R.layout.me_about_text,
-                new String[]{"news_title", "news_from", "news_judge", "news_time"}, new int[]{R.id.news_title, R.id.news_from, R.id.news_judge, R.id.news_time});
+                new String[]{"news_title", "news_from", "news_judge", "news_time"}, new int[]{R.id.news_title1,
+                R.id.news_from1, R.id.news_judge1, R.id.news_time1});
         listView.setAdapter(adapter);
 
         listView.setAdapter(adapter);
@@ -102,14 +103,18 @@ public class About extends Fragment {
                                 stringBuilder.append(array.getJSONObject(i)
                                         .getString("datetime"));
 
-                                mylist.add(array.getJSONObject(i)
+                                HashMap<String, Object> tempHashMap = new HashMap<String, Object>();
+                                tempHashMap.put("news_title", array.getJSONObject(i)
                                         .getString("datetime"));
+                                tempHashMap.put("news_from", "新闻来源" + i);
+                                tempHashMap.put("news_judge", "评论数量" + i);
+                                tempHashMap.put("news_time", "发布时间" + i);
 
+                                arrayList.add(tempHashMap);
                             }
 
-                            mylist.add("12344");
                             System.out.print(stringBuilder.toString());
-                            System.out.print(mylist.toString());
+                            System.out.print(arrayList.toString());
                         } catch (Exception e) {
                             e.printStackTrace();
                             System.out.print("EXCCEPT///////");
@@ -142,18 +147,6 @@ public class About extends Fragment {
      * getData
      */
     private ArrayList<HashMap<String, Object>> getData() {
-        ArrayList<HashMap<String, Object>> arrayList = new ArrayList<HashMap<String, Object>>();
-        for (int i = 0; i < 100; i++) {
-            HashMap<String, Object> tempHashMap = new HashMap<String, Object>();
-            tempHashMap.put("news_title", "新闻标题" + i);
-            tempHashMap.put("news_from", "新闻来源" + i);
-            tempHashMap.put("news_judge", "评论数量" + i);
-            tempHashMap.put("news_time", "发布时间" + i);
-
-            arrayList.add(tempHashMap);
-
-        }
-
 
         return arrayList;
 
