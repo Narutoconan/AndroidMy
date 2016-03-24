@@ -81,41 +81,9 @@ public class About extends Fragment {
         return view;
     }
 
-    /**
-     * @description 准备一些测试数据
-     */
-    public List<String> getListData() {
-        List list = new ArrayList();
-        list.add("Item 1");
-        list.add("Item 2");
-        list.add("Item 3");
-        list.add("Item 4");
-        list.add("Item 5");
-        return list;
-    }
 
-    /**
-     * 对Json格式数据进行解析处理添加到ListView
-     */
-    /**
-     * 连接服务器获取Json数据
-     */
-    public List<String> getJsonList() {
-//        TwitterRestClientUsage demo = new TwitterRestClientUsage();
-//        try {
-//            demo.getPublicTimeline();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
 
-        return null;
-    }
 
-    public List<String> jonsList() {
-        List<String> demoList = new ArrayList<String>();
-        demoList = mylist;
-        return mylist;
-    }
 
     /**
      * 获取服务端数据
