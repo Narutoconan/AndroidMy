@@ -9,16 +9,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.ArrayAdapter;
 
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import android.util.Log;
-
 
 
 import com.loopj.android.http.*;
@@ -29,6 +32,10 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import cz.msebera.android.httpclient.Header;
 
 
@@ -37,12 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mPager;
     private ArrayList<Fragment> fragmentsList;
     private LinearLayout ll_top;
-
     private TextView text1;
-
-    //
-    private static final String Tag="MainActivity";
-
+    private static final String Tag = "MainActivity";
+    private List<String> mylist = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,44 +58,10 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setLogo(R.drawable.ic_launcher);
         setSupportActionBar(toolbar);
         initView();
-        Log.d(Tag, "This is Debug.");
-//
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get("https://www.google.com", new AsyncHttpResponseHandler() {
 
-            @Override
-            public void onStart() {
-                // called before request is started
-
-
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                // called when response HTTP status is "200 OK"
-                String s=new String(response);
-                System.out.println(s);
-
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                //Log.d(TAG,e + "");
-                //Toast.makeText(this,statusCode,Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onRetry(int retryNo) {
-                // called when request is retried
-            }
-        });
-
-        //
-
-
+//        Log.e(MainActivity.Tag, mylist.toString());
     }
+
 
     private void initView() {
 
@@ -104,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment groupFragment = TestFragment.newInstance("消息");
         Fragment friendsFragment = TestFragment.newInstance("发现");
         Fragment chatFragment = TestFragment.newInstance("关于");
-//        Fragment about = About.about("1234");
+        Fragment about = About.newInstance("关于");
         //实例化
         Fragment homepage = Home.newInstance("首页");
 
@@ -112,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentsList.add(homepage);/**首页**/
         fragmentsList.add(groupFragment);
         fragmentsList.add(friendsFragment);
-        fragmentsList.add(chatFragment);
+        fragmentsList.add(about);
 
         mPager.setAdapter(new MyFragmentPagerAdapter(
                 getSupportFragmentManager(), fragmentsList));
