@@ -1,5 +1,6 @@
 package com.example.fiz.myapplication;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-
+import android.content.Intent;
 import org.json.JSONException;
 
 import java.text.Format;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 /**
  * Created by Fiz on 16/3/25.
  */
+@SuppressLint("ValidFragment")
 public class Home_demo  extends Fragment{
     private String textString;
     private static final String Tag = "MainActivity";
@@ -49,6 +51,8 @@ public class Home_demo  extends Fragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if ( ! arrayList.get(position).equals(null)){
                     Log.d(Tag, "THIS IS A JOKKE AA  UN FUNC  M ");
+                    Intent intent = new Intent("android.intent.action.MAIN");
+                    startActivity(intent);
 
                 }else {
                     Log.d(Tag, "THIS IS A error are you undenstard AA  UN FUNC  M ");
