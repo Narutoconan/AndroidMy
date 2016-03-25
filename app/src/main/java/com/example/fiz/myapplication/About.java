@@ -68,92 +68,14 @@ public class About extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.me_about, container, false);
-        ListView listView = (ListView) view.findViewById(R.id.listView_about);
-        //mylist赋值
-        try {
-            getPublicTimeline();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        SimpleAdapter adapter = new SimpleAdapter(getActivity(), getData(), R.layout.me_about_text,
-                new String[]{"news_title", "news_from", "news_judge", "news_time"}, new int[]{R.id.news_title1,
-                R.id.news_from1, R.id.news_judge1, R.id.news_time1});
-        listView.setAdapter(adapter);
 
-        listView.setAdapter(adapter);
+
 
         return view;
     }
 
 
-    /**
-     * 获取服务端数据
-     */
-    public void getPublicTimeline() throws JSONException {
-        TwitterRestClient.get("recent/?source=2&count=20&category=__all__&max_behot_time=1458732835.88&utm_source=toutiao&offset=0&_=1458732835806",
-                null, new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        // If the response is JSONObject instead of expected JSONArray
-//                        System.out.println(response);
-                        try {
-                            JSONArray array = response.getJSONArray("data");
 
-                            for (int i = 0; i < array.length(); i++) {
-                                stringBuilder.append(array.getJSONObject(i)
-                                        .getString("title"));
-
-                                HashMap<String, Object> tempHashMap = new HashMap<String, Object>();
-                                tempHashMap.put("news_title", array.getJSONObject(i)
-                                        .getString("title"));
-                                tempHashMap.put("news_from", array.getJSONObject(i)
-                                        .getString("source"));
-                                tempHashMap.put("news_judge", array.getJSONObject(i)
-                                        .getString("comments_count")+"评论数量");
-                                tempHashMap.put("news_time", array.getJSONObject(i)
-                                        .getString("datetime"));
-
-                                arrayList.add(tempHashMap);
-                            }
-
-//                            System.out.print(stringBuilder.toString());
-//                            System.out.print(arrayList.toString());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            System.out.print("EXCCEPT///////");
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
-                        // Pull out the first event on the public timeline
-                        try {
-                            JSONObject firstEvent = (JSONObject) timeline.get(0);
-
-                            String tweetText = firstEvent.getString("text");
-
-                            // Do something with the response
-
-
-                            System.out.println(tweetText);
-                        } catch (JSONException e) {
-                            //do something
-                        }
-
-                    }
-                });
-    }
-
-    /**
-     * getData
-     */
-    private ArrayList<HashMap<String, Object>> getData() {
-
-        return arrayList;
-
-    }
 
 }
 
