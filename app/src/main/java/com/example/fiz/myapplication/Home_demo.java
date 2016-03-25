@@ -51,7 +51,7 @@ public class Home_demo  extends Fragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if ( ! arrayList.get(position).equals(null)){
                     Log.d(Tag, "THIS IS A JOKKE AA  UN FUNC  M ");
-                    Intent intent = new Intent("android.intent.action.MAIN");
+                    Intent intent = new Intent("android.intent.action.HomeActivity");
                     startActivity(intent);
 
                 }else {
