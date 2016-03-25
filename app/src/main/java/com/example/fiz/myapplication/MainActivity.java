@@ -76,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment chatFragment = TestFragment.newInstance("关于");
         Fragment about = About.newInstance("关于");
         //实例化
-        Fragment homepage = Home.newInstance("首页");
-
+        Home_demo homepage = new Home_demo("SHOU");
 
         fragmentsList.add(homepage);/**首页**/
         fragmentsList.add(groupFragment);
